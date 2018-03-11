@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load staticfiles i18n static %}
+
+{% block title %}{% trans 'Chat' %}{% endblock %}
+
+{% block css %}
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+{% endblock %}
+
+{% block content %}
+    <div id="frame">
+        <div id="sidepanel">
+            <div id="profile">
+                <div class="wrap">
+                    <input type="hidden" id="user_id" data-user-id="{{ user.id }}">
+                    {% if user.avatar %}
+                        <img id="profile-img" src="{{ user.avatar.url }}" data-id="{{ user.id }}" class="online" alt=""/>
+                    {% else %}
+                        <img id="profile-img" src="{% get_media_prefix %}accounts/default/avatar.png" data-id="{{ user.id }}" class="online" alt=""/>
+                    {% endif %}
+                    <p id="btn_profile" data-id="{{ user.id }}">{% if user.nickname %}{{ user.nickname }}{% else %}{{ user.username }}{% endif %}</p>
+                    <i class="fa fa-sign-out" id="sign_out_button" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div id="contacts">
+                {% include 'chat_rooms.html' %}
+            </div>
+            <div id="bottom-bar">
+                <button id="add_user">
+                    <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>
+                    <span>{% trans 'Add user' %}</span>
+                </button>
+                <button id="add_chat">
+                    <i class="fa fas fa-users fa-fw" aria-hidden="true"></i>
+                    <span>{% trans 'Add chat' %}</span>
+                </button>
+            </div>
+        </div>
+        <div class="content" id="chat_content">
+            <div class="choose_write">{% trans 'Choose to whom you would to write' %}</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js'></script>
+    <script src='{% static "js/index.js" %}'></script>
+{% endblock %}

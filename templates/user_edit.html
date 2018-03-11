@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load staticfiles i18n static %}
+
+{% block title %}{% trans "Edit profile" %} {{ m_user.username }}{% endblock %}
+
+{% block css %}
+    <link rel="Stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.css" />
+    <link rel="stylesheet" href="{% static 'css/user_edit.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form class="form-register" action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <i class="fa fa-home" id="btn_home" aria-hidden="true"></i>
+            <i class="fas fa-chevron-circle-left" id="btn_left" data-id="{{ m_user.id }}" aria-hidden="true"></i>
+        </div>
+        <div class="form-group">
+            <h1 class="h3 mb-3 font-weight-normal">{% trans "Edit profile" %} {{ m_user.username }}</h1>
+            <div class="div_base_crop">
+                <div id="div_img_crop" class="load"></div>
+                <div class="container" id="div_img_crop_grid">
+                    <div class="grid">
+                        <div class="col-1-2">
+                            <img class="demo-cropper" id="cropper" src="{{ m_user.avatar_big.url }}" style="display: none;" />
+                        </div>
+                        <div class="col-1-2">
+                            <div class="buttons">
+                                <button type="button" id="upload_img" class="img_btn">{% trans "Upload" %}</button>
+                                <button type="button" id="save_img" class="img_btn">{% trans "Save" %}</button>
+                                <button type="button" id="delete_img" class="img_btn">{% trans "Delete" %}</button>
+                                <input type="hidden" id="user_id" name="user_id" value="{{ m_user.id }}" />
+                                <input id="upload_img_file" type="file" name="image" accept="image/*" data-type='image' style="display: none;" value="{% trans "Upload" %}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for field in form %}
+            <div class="form-group has-feedback">
+                {{ field }}
+                {% if field.help_text %}{{ field.help_text }}{% endif %}
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" id="save">{% trans "Save" %}</button>
+        <button type="button" id="cancel" data-id="{{ m_user.id }}">{% trans "Cancel" %}</button>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js"></script>
+    <script src="{% static 'js/user_edit.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click','#btn_home', function() {
+                window.location = '/';
+                return false;
+            });
+            $(document).on('click','#btn_left, #cancel', function() {
+                var id = $(this).attr('data-id');
+                window.location = '/user/' + id + '/';
+                return false;
+            });
+        });
+        CropImage.init();
+    </script>
+{% endblock %}

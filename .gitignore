@@ -1,0 +1,15 @@
+# Packaging
+*.pyc
+__pycache__
+
+
+# Temporary/OS files
+*.swp
+*.swo
+*.*~
+.~lock.*
+*.DS_Store
+
+# IDE files
+.idea
+

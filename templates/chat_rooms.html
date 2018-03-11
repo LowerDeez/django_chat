@@ -1,0 +1,25 @@
+{% load staticfiles i18n static rooms %}
+<ul>
+    {% for room in rooms %}
+        <li class="contact room-link{% if room_active %}{% if room.id == room_active %} active{% endif %}{% endif %}" data-room-id="{{ room.id }}">
+            <div class="wrap">
+                <img {% if room.last_message %}class="last_msg"{% endif %} src="{% if room.chat_type == 1 %}{{ room.members.all|room_avatar:user }}{% else %}{{ room.avatar.url }}{% endif %}" alt=""/>
+                <div class="meta">
+                    <p class="name">
+                        {% if room.chat_type == 1 %}
+                            {{ room.members.all|room_title:user }}
+                        {% else %}
+                            {{ room.title }}
+                        {% endif %}
+                    </p>
+                    {% if room.last_message %}
+                        <p class="preview">{{ room.last_message }}</p>
+                    {% endif %}
+                    <p class="preview">{{ room.last_time|date:"d.m.Y H:i" }}</p>
+                </div>
+            </div>
+        </li>
+    {% empty %}
+        <p class="empty">No chat rooms defined!</p>
+    {% endfor %}
+</ul>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles i18n static %}
+
+{% block title %}{% trans 'Log in' %}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form class="form-signin" action="" method="post">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal">{% trans "Please sign in" %}</h1>
+        {% for field in form %}
+            <div class="form-group has-feedback">
+                {{ field }}
+                {% if field.help_text %}{{ field.help_text }}{% endif %}
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit" id="sign_in">{% trans "Sign in" %}</button>
+        <button type="button" id="register">{% trans "Register" %}</button>
+
+        {% now "Y" as current_year %}
+        <p class="mt-5 mb-3 text-muted"><strong>&copy; 2018{% if current_year != '2018' %} - {{ current_year }}{% endif %}</strong> {% trans "All rights reserved." %}</p>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function() {
+            $(document).on('click','#register', function() {
+                window.location = '/register/';
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

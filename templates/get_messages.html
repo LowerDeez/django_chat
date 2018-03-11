@@ -1,0 +1,43 @@
+{% load staticfiles i18n static rooms %}
+<div class="contact-profile">
+    <img src="{% if room.chat_type == 1 %}{{ room.members.all|room_avatar:user }}{% else %}{{ room.avatar.url }}{% endif %}" alt=""/>
+    <p>
+        {% if room.chat_type == 1 %}
+            {{ room.members.all|room_title:user }}
+        {% else %}
+            {{ room.title }}
+        {% endif %}
+    </p>
+</div>
+<div class="messages room" id="room{{ room.id }}">
+    <ul id="messages_room_{{ room.id }}" class="messages_room" data-room-id="{{ room.id }}">
+        {% for m in messages %}
+            <li class="{% if m.owner == user %}replies{% else %}sent{% endif %}">
+                {% if m.owner.avatar %}
+                    <img src="{{ m.owner.avatar.url }}" class="online" alt=""/>
+                {% else %}
+                    <img src="{% get_media_prefix %}accounts/default/avatar.png" class="online" alt=""/>
+                {% endif %}
+                <span class="{% if m.owner == user %}right{% endif %}">
+                    <span class="strong">
+                        {% if m.owner.nickname %}
+                            {{ m.owner.nickname }}
+                        {% else %}
+                            {{ m.owner.username }}
+                        {% endif %}
+                    </span>
+                    {{ m.timestamp|date:"d.m.Y H:i" }}
+                </span><br>
+                <p>{{ m.message }}</p>
+            </li>
+        {% empty %}
+            <div class="messages_empty">No chat messages!</div>
+        {% endfor %}
+    </ul>
+</div>
+<div class="message-input">
+    <div class="wrap">
+        <input type="text" id="text_message" placeholder="Write your message..."/>
+        <button class="submit" id="send_message"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+    </div>
+</div>

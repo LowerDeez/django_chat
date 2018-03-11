@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load staticfiles i18n static %}
+
+{% block title %}{% trans 'Add chat' %}{% endblock %}
+
+{% block css %}
+    <link rel="Stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.css" />
+    <link rel="stylesheet" href="{% static 'css/add_room.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form class="form-add_room" id="form_add_room" action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <i class="fa fa-home" id="btn_home" aria-hidden="true"></i>
+        </div>
+        <div class="form-group">
+            <h1 class="h3 mb-3 font-weight-normal">{% trans "Add chat" %}</h1>
+            <div class="div_base_crop">
+                <div id="div_img_crop" class="load"></div>
+                <div class="container" id="div_img_crop_grid">
+                    <div class="grid">
+                        <div class="col-1-2">
+                            <img class="demo-cropper" id="cropper" src="{% get_media_prefix %}chats/default/avatar_150x150.png" style="display: none;" />
+                        </div>
+                        <div class="col-1-2">
+                            <div class="buttons">
+                                <button type="button" id="upload_img" class="img_btn">{% trans "Upload" %}</button>
+                                <button type="button" id="delete_img" class="img_btn">{% trans "Delete" %}</button>
+                                <input id="upload_img_file" type="file" name="image" accept="image/*" data-type='image' style="display: none;" value="{% trans "Upload" %}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% for field in form %}
+            <div class="form-group has-feedback">
+                {{ field }}
+                {% if field.help_text %}{{ field.help_text }}{% endif %}
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="form-group">
+            <h1 class="h3 mb-3 font-weight-fr">{% trans "Friends" %}</h1>
+        </div>
+
+        {% for u in user.friends.all %}
+            <div class="form-group form_row">
+                <div class="span_col1"><label for="checkbox_{{ u.id }}">{{ u }}</label></div>
+                <div class="span_col"><input id="checkbox_{{ u.id }}" class="fr_check" data-id="{{ u.id }}" type="checkbox"></div>
+            </div>
+        {% empty %}
+            <div class="form-group form_row">{% trans "Not friends" %}</div>
+        {% endfor %}
+
+        <button type="button" id="add_room">{% trans "Add chat" %}</button>
+        <button type="button" id="cancel">{% trans "Cancel" %}</button>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js"></script>
+    <script src="{% static 'js/add_chat_room.js' %}"></script>
+    <script>
+        $(document).on('click','#btn_home, #cancel', function() {
+            window.location = '/';
+            return false;
+        });
+        CropImage.init();
+    </script>
+{% endblock %}

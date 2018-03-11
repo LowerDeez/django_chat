@@ -1,0 +1,102 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: start;
+    align-items: start;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-height: 0;
+    background: #243140;
+    font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+    font-size: 1em;
+    letter-spacing: 0.1px;
+    color: #32465a;
+    text-rendering: optimizeLegibility;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+}
+
+.div_main {
+    width: 100%;
+    max-width: 320px;
+    padding: 5px 0 5px 0;
+    margin: 0 auto;
+}
+
+.div_main .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 1em;
+    width: 100%;
+}
+
+.font-weight-normal {
+    color: white;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+}
+
+div.div_img {
+    border: 4px solid #32465a;
+    text-align: center;
+    padding: 10px 5px 5px 5px;
+    margin-bottom: 15px;
+}
+
+div.div_img img {
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.span_col1 {
+    height: auto;
+    padding: 10px 0 10px 5px;
+    font-size: 1.1em;
+    width: 100px;
+    color: white;
+    float: left;
+    border-right: 4px solid #32465a;
+}
+
+.span_col {
+    height: auto;
+    padding: 10px 0 10px 5px;
+    font-size: 1.1em;
+    width: calc(100% - 114px);
+    color: white;
+    float: left;
+}
+
+.has-feedback {
+    padding: 0;
+    width: calc(100% - 8px);
+    height: 42px;
+    border: 4px solid #32465a;
+    margin-bottom: 5px;
+}
+
+.fa-home, .fa-edit {
+    color: white;
+    font: normal normal normal 30px/1 FontAwesome;
+    cursor: pointer;
+}
+
+.fa-edit {
+    float: right;
+}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load staticfiles i18n static %}
+
+{% block title %}{% trans 'Add user' %}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/add_room.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form class="form-add_room" action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <i class="fa fa-home" id="btn_home" aria-hidden="true"></i>
+        </div>
+        <div class="form-group">
+            <h1 class="h3 mb-3 font-weight-normal">{% trans "Add user" %}</h1>
+        </div>
+
+        {% for field in form %}
+            <div class="form-group has-feedback">
+                {{ field }}
+                {% if field.help_text %}{{ field.help_text }}{% endif %}
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" id="add_room">{% trans "Add user" %}</button>
+        <button type="button" id="cancel" data-id="{{ m_user.id }}">{% trans "Cancel" %}</button>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).on('click','#btn_home, #cancel', function() {
+            window.location = '/';
+            return false;
+        });
+    </script>
+{% endblock %}
